@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: autosphere-backend
+    runtime: java
+    plan: free
+    region: oregon
+    buildCommand: ./mvnw clean package -DskipTests
+    startCommand: java -Dserver.port=$PORT -jar target/vehiclerental-0.0.1-SNAPSHOT.jar
+    healthCheckPath: /api/health
+    envVars:
+      - key: JAVA_VERSION
+        value: 17

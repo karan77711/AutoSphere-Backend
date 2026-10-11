@@ -29,6 +29,7 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable()) // disable CSRF for APIs
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/", "/api/health").permitAll()
                 .requestMatchers("/auth/**").permitAll()       // public endpoints for login/register
                 .requestMatchers("/api/users/**").permitAll()  // allow user registration/login
                 .requestMatchers("/rentals/**").permitAll()    // allow rentals without JWT
@@ -55,14 +56,14 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-    // Allow frontend (http://localhost:5173) to call backend (http://localhost:8082)
+    // Allow frontend (localhost, Vercel, GitHub Pages) to call backend API
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:5173")
+                        .allowedOriginPatterns("http://localhost:*", "https://*.vercel.app", "https://*.github.io")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowCredentials(true);
             }
