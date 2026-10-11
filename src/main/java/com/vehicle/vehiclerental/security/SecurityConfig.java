@@ -29,11 +29,11 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable()) // disable CSRF for APIs
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/api/health").permitAll()
+                .requestMatchers("/").permitAll()
                 .requestMatchers("/auth/**").permitAll()       // public endpoints for login/register
                 .requestMatchers("/api/users/**").permitAll()  // allow user registration/login
-                .requestMatchers("/rentals/**").permitAll()    // allow rentals without JWT
-                .requestMatchers("/vehicles/**").hasAnyRole("USER","ADMIN")
+                .requestMatchers("/vehicles/**").permitAll()   // allow viewing vehicles
+                .requestMatchers("/rentals/**").permitAll()    // allow rentals
                 .requestMatchers("/customers/**").hasAnyRole("USER","ADMIN")
                 .anyRequest().authenticated()
             )

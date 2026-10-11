@@ -11,17 +11,12 @@ import java.util.Map;
 public class DefaultController {
 
     @GetMapping("/")
-    public String welcome() {
-        return "Welcome to AutoSphere Vehicle Rental Management API!";
-    }
-
-    @GetMapping("/api/health")
-    public ResponseEntity<Map<String, Object>> health() {
+    public ResponseEntity<Map<String, Object>> root() {
         Map<String, Object> response = new HashMap<>();
-        response.put("status", "UP");
-        response.put("service", "AutoSphere-Backend");
+        response.put("system", "AutoSphere - Vehicle Rental Management System");
+        response.put("status", "ACTIVE");
         response.put("version", "1.0.0");
-        response.put("timestamp", System.currentTimeMillis());
+        response.put("description", "Enterprise Spring Boot REST API for Vehicle Rentals, Fleet Tracking and Bookings");
         return ResponseEntity.ok(response);
     }
 }
